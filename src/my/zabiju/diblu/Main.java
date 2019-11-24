@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,7 @@ public class Main {
                 tempResult = rozdej();
             }
             print(tempResult, i);
+            tempResult = null;
         }
         //printToConsole(tempResult,0);
         System.out.println("hotovo");
@@ -88,32 +90,32 @@ public class Main {
         List<ClenRodiny> lide = new ArrayList<>();
         // sport
         lide.add(createClen(Person.Dana, Arrays.asList(Person.Kamila), Family.SPORT));
-        lide.add(createClen(Person.Boba, Family.SPORT));
-        lide.add(createClen("Barča", Family.SPORT));
-        lide.add(createClen("Toník", Family.SPORT));
-        lide.add(createClen("Janička", Family.SPORT));
-        lide.add(createClen("Máťa", Family.SPORT));
+        lide.add(createClen(Person.Boba, Arrays.asList(Person.Honza), Family.SPORT));
+        lide.add(createClen(Person.Barca, Arrays.asList(Person.Kuba), Family.SPORT));
+        lide.add(createClen(Person.Tony, Arrays.asList(Person.Lada), Family.SPORT));
+        lide.add(createClen(Person.Janicka, Arrays.asList(Person.Stepa), Family.SPORT));
+        lide.add(createClen(Person.Mata, Collections.emptyList(), Family.SPORT));
 
         // brno
-        lide.add(createClen("Hana", Family.BRNO));
-        lide.add(createClen("Láďa", Family.BRNO));
+        lide.add(createClen(Person.Hana, Arrays.asList(Person.Janicka), Family.BRNO));
+        lide.add(createClen(Person.Lada, Arrays.asList(Person.Petka), Family.BRNO));
 
         // mimi
-        lide.add(createClen("Peťka", Family.MIMINO, Family.MAIN));
-        lide.add(createClen("Honza", Family.MIMINO));
-        lide.add(createClen("Páťa", Family.MIMINO));
+        lide.add(createClen(Person.Petka, Arrays.asList(Person.Tony), Family.MIMINO, Family.MAIN));
+        lide.add(createClen(Person.Honza, Arrays.asList(Person.Dana), Family.MIMINO));
+        lide.add(createClen(Person.Pata, Arrays.asList(Person.Martina), Family.MIMINO));
 
         // main
-        lide.add(createClen("Stěpa", Family.MAIN));
-        lide.add(createClen("Petr Dibl", Family.MAIN));
+        lide.add(createClen(Person.Stepa, Arrays.asList(Person.Petr_Last), Family.MAIN));
+        lide.add(createClen(Person.Petr_Dibl, Arrays.asList(Person.Barca), Family.MAIN));
 
         // my
-        lide.add(createClen("Marta", Family.PRAHA, Family.MAIN));
-        lide.add(createClen("Petr Lašt", Family.PRAHA));
+        lide.add(createClen(Person.Martina, Arrays.asList(Person.Boba), Family.PRAHA, Family.MAIN));
+        lide.add(createClen(Person.Petr_Last, Arrays.asList(Person.Petr_Dibl), Family.PRAHA));
 
         // caj
-        lide.add(createClen("Kuba", Family.CAJ, Family.MAIN));
-        lide.add(createClen("Kamča", Family.CAJ));
+        lide.add(createClen(Person.Kuba, Arrays.asList(Person.Hana), Family.CAJ, Family.MAIN));
+        lide.add(createClen(Person.Kamila, Arrays.asList(Person.Pata), Family.CAJ));
 
         return lide;
 
@@ -128,7 +130,7 @@ public class Main {
         for (int i = 0; i < davaji.size(); i++) {
 
             ClenRodiny dava = davaji.get(i);
-            ClenRodiny dostava = najdi(dava.getZakazaneRodiny());
+            ClenRodiny dostava = najdi(dava);
             try {
                 dostava.setDostal(true);
                 result.add(String.format(REGEX, i + 1, dava.name(), dostava.name()));
@@ -146,7 +148,7 @@ public class Main {
         for (int i = 0; i < davaji.size(); i++) {
 
             ClenRodiny dava = davaji.get(i);
-            ClenRodiny dostava = najdi(dava.getZakazaneRodiny());
+            ClenRodiny dostava = najdi(dava);
             try {
                 dostava.setDostal(true);
                 dava.setObdarovany(dostava);
@@ -168,13 +170,13 @@ public class Main {
     }
 
 
-    public ClenRodiny najdi(List<Family> zakaz) {
+    public ClenRodiny najdi(ClenRodiny dava) {
         Random rand = new Random();
         ClenRodiny clen;
         for (int i = 0; i < dostavaji.size(); i++) {
             int randomIndex = rand.nextInt(davaji.size());
             clen = dostavaji.get(randomIndex);
-            if (!clen.dostal() && !contains(zakaz, clen.getZakazaneRodiny())) {
+            if (!clen.dostal() && !contains(dava.getZakazaneRodiny(), clen.getZakazaneRodiny()) && !dava.davalMu(clen.name())) {
                 return clen;
             }
         }
