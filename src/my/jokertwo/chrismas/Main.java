@@ -1,4 +1,4 @@
-package my.zabiju.diblu;
+package my.jokertwo.chrismas;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,16 +13,15 @@ import java.util.Random;
 
 public class Main {
 
-    private List<ClenRodiny> davaji;
-    private List<ClenRodiny> dostavaji;
+    private List<FamilyPerson> davaji;
+    private List<FamilyPerson> dostavaji;
     private List<List<String>> all;
-    private EmailSender sender;
 
 
     public Main() {
         all = new ArrayList<>();
         List<String> tempResult = null;
-        sender = new EmailSender();
+
         boolean done = false;
         /*while (!done) {
             done = rozdejAPosli();
@@ -86,36 +85,39 @@ public class Main {
     }
 
 
-    private List<ClenRodiny> initLidi() {
-        List<ClenRodiny> lide = new ArrayList<>();
+    private List<FamilyPerson> initLidi() {
+        List<FamilyPerson> lide = new ArrayList<>();
         // sport
-        lide.add(createClen(Person.Dana, Arrays.asList(Person.Kamila), Family.SPORT));
-        lide.add(createClen(Person.Boba, Arrays.asList(Person.Honza), Family.SPORT));
-        lide.add(createClen(Person.Barca, Arrays.asList(Person.Kuba), Family.SPORT));
-        lide.add(createClen(Person.Tony, Arrays.asList(Person.Lada), Family.SPORT));
-        lide.add(createClen(Person.Janicka, Arrays.asList(Person.Stepa), Family.SPORT));
-        lide.add(createClen(Person.Mata, Collections.emptyList(), Family.SPORT));
+        lide.add(createClen(People.Dana, Arrays.asList(People.Kamila, People.Petka), Family.SPORT));
+        lide.add(createClen(People.Boba, Arrays.asList(People.Honza, People.Lada), Family.SPORT));
+        lide.add(createClen(People.Barca, Arrays.asList(People.Kuba, People.Honza), Family.SPORT));
+        lide.add(createClen(People.Tony, Arrays.asList(People.Lada, People.Kamila), Family.SPORT));
+        //lide.add(createClen(People.Janicka, Arrays.asList(People.Stepa, People.Kuba), Family.SPORT));
+        lide.add(createClen(People.Mata, Arrays.asList(People.Martina), Family.SPORT));
+        lide.add(createClen(People.Misa, Collections.emptyList(), Family.SPORT));
 
         // brno
-        lide.add(createClen(Person.Hana, Arrays.asList(Person.Janicka), Family.BRNO));
-        lide.add(createClen(Person.Lada, Arrays.asList(Person.Petka), Family.BRNO));
+        lide.add(createClen(People.Hana, Arrays.asList(/*People.Janicka,*/ People.Stepa), Family.BRNO));
+        lide.add(createClen(People.Lada, Arrays.asList(People.Petka, People.Tony), Family.BRNO));
 
-        // mimi
-        lide.add(createClen(Person.Petka, Arrays.asList(Person.Tony), Family.MIMINO, Family.MAIN));
-        lide.add(createClen(Person.Honza, Arrays.asList(Person.Dana), Family.MIMINO));
-        lide.add(createClen(Person.Pata, Arrays.asList(Person.Martina), Family.MIMINO));
+        // volleyball
+        lide.add(createClen(People.Petka, Arrays.asList(People.Tony, People.Hana), Family.VOLLEYBALL, Family.MAIN));
+        lide.add(createClen(People.Honza, Arrays.asList(People.Dana, People.Barca), Family.VOLLEYBALL));
+        lide.add(createClen(People.Patrik, Arrays.asList(People.Martina, People.Petr_Dibl), Family.VOLLEYBALL));
+        lide.add(createClen(People.Filip, Collections.emptyList(), Family.VOLLEYBALL));
 
         // main
-        lide.add(createClen(Person.Stepa, Arrays.asList(Person.Petr_Last), Family.MAIN));
-        lide.add(createClen(Person.Petr_Dibl, Arrays.asList(Person.Barca), Family.MAIN));
+        lide.add(createClen(People.Stepa, Arrays.asList(People.Petr_Last, People.Boba), Family.MAIN));
+        lide.add(createClen(People.Petr_Dibl, Arrays.asList(People.Barca, People.Patrik), Family.MAIN));
 
-        // my
-        lide.add(createClen(Person.Martina, Arrays.asList(Person.Boba), Family.PRAHA, Family.MAIN));
-        lide.add(createClen(Person.Petr_Last, Arrays.asList(Person.Petr_Dibl), Family.PRAHA));
+        // prague
+        lide.add(createClen(People.Martina, Arrays.asList(People.Boba, People.Mata), Family.PRAGUE, Family.MAIN));
+        lide.add(createClen(People.Petr_Last, Arrays.asList(People.Petr_Dibl/*, People.Janicka*/), Family.PRAGUE));
 
-        // caj
-        lide.add(createClen(Person.Kuba, Arrays.asList(Person.Hana), Family.CAJ, Family.MAIN));
-        lide.add(createClen(Person.Kamila, Arrays.asList(Person.Pata), Family.CAJ));
+        // tea
+        lide.add(createClen(People.Kuba, Arrays.asList(People.Hana, People.Petr_Last), Family.TEA, Family.MAIN));
+        lide.add(createClen(People.Kamila, Arrays.asList(People.Patrik, People.Dana), Family.TEA));
+        lide.add(createClen(People.Matous, Collections.emptyList(), Family.TEA));
 
         return lide;
 
@@ -129,10 +131,10 @@ public class Main {
         String REGEX = "%-3d %-12s dava: %-32s";
         for (int i = 0; i < davaji.size(); i++) {
 
-            ClenRodiny dava = davaji.get(i);
-            ClenRodiny dostava = najdi(dava);
+            FamilyPerson dava = davaji.get(i);
+            FamilyPerson dostava = najdi(dava);
             try {
-                dostava.setDostal(true);
+                dostava.setGotten(true);
                 result.add(String.format(REGEX, i + 1, dava.name(), dostava.name()));
             } catch (NullPointerException e) {
                 return null;
@@ -142,41 +144,13 @@ public class Main {
     }
 
 
-    public boolean rozdejAPosli() {
-        davaji = initLidi();
-        dostavaji = initLidi();
-        for (int i = 0; i < davaji.size(); i++) {
-
-            ClenRodiny dava = davaji.get(i);
-            ClenRodiny dostava = najdi(dava);
-            try {
-                dostava.setDostal(true);
-                dava.setObdarovany(dostava);
-            } catch (NullPointerException e) {
-                return false;
-            }
-        }
-        //posli(davaji);
-        return true;
-
-    }
-
-
-    public void posli(List<ClenRodiny> davaji) {
-        for (ClenRodiny item : davaji) {
-            sender.sendEmail(item);
-        }
-        System.out.println("poslano");
-    }
-
-
-    public ClenRodiny najdi(ClenRodiny dava) {
+    public FamilyPerson najdi(FamilyPerson dava) {
         Random rand = new Random();
-        ClenRodiny clen;
+        FamilyPerson clen;
         for (int i = 0; i < dostavaji.size(); i++) {
             int randomIndex = rand.nextInt(davaji.size());
             clen = dostavaji.get(randomIndex);
-            if (!clen.dostal() && !contains(dava.getZakazaneRodiny(), clen.getZakazaneRodiny()) && !dava.davalMu(clen.name())) {
+            if (!clen.alreadyGotten() && !contains(dava.getForbiddenFamily(), clen.getForbiddenFamily()) && !dava.davalMu(clen.name())) {
                 return clen;
             }
         }
@@ -194,8 +168,8 @@ public class Main {
     }
 
 
-    private ClenRodiny createClen(Person name, List<Person> daval, Family... families) {
-        ClenRodiny clen = new ClenRodiny(name, daval, families);
+    private FamilyPerson createClen(People name, List<People> daval, Family... families) {
+        FamilyPerson clen = new FamilyPerson(name, daval, families);
         return clen;
     }
 

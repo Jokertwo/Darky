@@ -1,12 +1,12 @@
-package my.zabiju.diblu;
+package my.jokertwo.chrismas;
 
-public enum Person {
+public enum People {
     Kamila,
     Kuba,
     Honza,
     Lada,
     Hana,
-    Janicka,
+    //Janicka,
     Tony,
     Barca,
     Dana,
@@ -14,8 +14,12 @@ public enum Person {
     Boba,
     Petr_Dibl,
     Petka,
-    Pata,
+    Patrik,
     Petr_Last,
     Martina,
-    Mata
+    Mata,
+    Misa,
+    Filip,
+    Matous
+
 }
