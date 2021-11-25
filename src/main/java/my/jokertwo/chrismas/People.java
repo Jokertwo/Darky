@@ -6,7 +6,7 @@ public enum People {
     Honza,
     Lada,
     Hana,
-    //Janicka,
+    // Janicka,
     Tony,
     Barca,
     Dana,

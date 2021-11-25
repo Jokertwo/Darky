@@ -12,7 +12,6 @@ public class FamilyPerson implements Person {
     private final List<Family> forbidenFamily;
     private final List<People> daval;
 
-
     public FamilyPerson(People name, List<People> daval, Family... families) {
         super();
         this.name = name;
@@ -26,20 +25,24 @@ public class FamilyPerson implements Person {
         return name;
     }
 
+
     @Override
     public boolean alreadyGotten() {
         return gotIt;
     }
+
 
     @Override
     public void setGotten(boolean value) {
         this.gotIt = value;
     }
 
+
     @Override
     public void setGiving(boolean value) {
 
     }
+
 
     @Override
     public boolean isAlreadyGiving() {
@@ -55,6 +58,5 @@ public class FamilyPerson implements Person {
     public List<Family> getForbiddenFamily() {
         return forbidenFamily;
     }
-
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 public interface Person {
 
-
     People name();
 
 
@@ -26,12 +25,14 @@ public interface Person {
      */
     List<Family> getForbiddenFamily();
 
+
     /**
      * Set information if person giving to someone
      *
      * @param value
      */
     void setGiving(boolean value);
+
 
     /**
      * Set information if person got present
