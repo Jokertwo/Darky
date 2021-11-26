@@ -3,19 +3,22 @@ package my.jokertwo.chrismas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.Data;
 
-
-public class FamilyPerson implements Person {
+@Data
+public class FamilyPerson {
 
     private final People name;
     private boolean gotIt;
+    private final String nick;
     private final List<Family> forbidenFamily;
     private final List<People> daval;
 
-    public FamilyPerson(People name, List<People> daval, Family... families) {
+    public FamilyPerson(People name, List<People> daval, String nick, Family... families) {
         super();
         this.name = name;
         this.daval = daval;
+        this.nick = nick;
         forbidenFamily = new ArrayList<>(Arrays.asList(families));
         gotIt = false;
     }
@@ -25,29 +28,6 @@ public class FamilyPerson implements Person {
         return name;
     }
 
-
-    @Override
-    public boolean alreadyGotten() {
-        return gotIt;
-    }
-
-
-    @Override
-    public void setGotten(boolean value) {
-        this.gotIt = value;
-    }
-
-
-    @Override
-    public void setGiving(boolean value) {
-
-    }
-
-
-    @Override
-    public boolean isAlreadyGiving() {
-        return false;
-    }
 
 
     public boolean davalMu(People novy) {
