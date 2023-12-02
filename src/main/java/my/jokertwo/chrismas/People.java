@@ -9,6 +9,7 @@ public enum People {
     // Janicka,
     Tony,
     Barca,
+    Alzbeta,
     Dana,
     Stepa,
     Boba,
@@ -17,9 +18,12 @@ public enum People {
     Patrik,
     Petr_Last,
     Martina,
+    Stepan,
+    David,
     Mata,
     Misa,
     Filip,
-    Matous
+    Matous,
+    Vojta
 
 }
