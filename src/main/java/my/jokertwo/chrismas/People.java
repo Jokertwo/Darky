@@ -8,6 +8,7 @@ public enum People {
     Hana,
     // Janicka,
     Tony,
+    Bara,
     Barca,
     Alzbeta,
     Dana,

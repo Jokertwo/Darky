@@ -25,6 +25,7 @@ public class Main {
     public Main(boolean rozdej) {
         all = initLidi();
         if (rozdej) {
+            List<String> result = new ArrayList<>();
             List<String> tempResult = null;
 
             for (int i = 0; i < 10; i++) {
@@ -32,8 +33,12 @@ public class Main {
                     tempResult = rozdej();
                 }
                 print(tempResult, i);
+                String.join("\n", tempResult);
                 tempResult = null;
             }
+            int index = new Random().nextInt(11);
+
+
         } else {
             Path path = Paths.get("src/main/resources/možnosti.txt");
             try (Stream<String> lines = Files.lines(path)) {
@@ -68,8 +73,8 @@ public class Main {
 
     private void print(List<String> values, int number) {
         try (FileWriter fw = new FileWriter("možnosti.txt", true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter out = new PrintWriter(bw)) {
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
             out.println("Možnost: " + (number + 1));
             for (String item : values) {
                 out.println(item);
@@ -84,62 +89,62 @@ public class Main {
     private List<FamilyPerson> initLidi() {
         List<FamilyPerson> lide = new ArrayList<>();
         // sport
-        lide.add(createClen(People.Dana, Arrays.asList(People.Kamila, People.Petka, People.Martina, People.Petr_Last),
+        lide.add(createClen(People.Dana, Arrays.asList(People.Kamila, People.Petka, People.Martina, People.Petr_Last, People.Stepa, People.Kuba),
                 "Dane", Family.SPORT));
-        lide.add(createClen(People.Boba, Arrays.asList(People.Honza, People.Lada, People.Filip, People.Martina),
+        lide.add(createClen(People.Boba, Arrays.asList(People.Honza, People.Lada, People.Filip, People.Martina, People.Kuba, People.Petka),
                 "Bobovi", Family.SPORT));
-        lide.add(createClen(People.Barca, Arrays.asList(People.Kuba, People.Honza, People.Petr_Last, People.Petr_Dibl),
-                "Barce", Family.SPORT));
-        lide.add(
-                createClen(People.Tony, Arrays.asList(People.Lada, People.Kamila, People.Kuba, People.Matous), "Tonymu",
-                        Family.SPORT));
+        lide.add(createClen(People.Barca, Arrays.asList(People.Kuba, People.Honza, People.Petr_Last, People.Petr_Dibl, People.Stepan, People.Stepa),
+                "Barče Ř.", Family.SPORT));
+        lide.add(createClen(People.Tony, Arrays.asList(People.Lada, People.Kamila, People.Kuba, People.Matous, People.Patrik, People.Martina), "Tonymu",
+                Family.SPORT));
+        lide.add(createClen(People.Bara, Arrays.asList(), "Barce (od Tonyho)", Family.SPORT));
         // lide.add(createClen(People.Janicka, Arrays.asList(People.Stepa, People.Kuba), Family.SPORT));
-        lide.add(createClen(People.Mata, Arrays.asList(People.Martina, People.Stepa, People.Kuba), "Matějovi",
+        lide.add(createClen(People.Mata, Arrays.asList(People.Martina, People.Stepa, People.Kuba, People.Vojta, People.Kamila), "Matějovi",
                 Family.SPORT));
         //lide.add(createClen(People.Misa, Arrays.asList(People.Matous, People.Hana),"Míše", Family.SPORT));
-        lide.add(createClen(People.Alzbeta, Arrays.asList(), "Bětušce", Family.SPORT));
+        //lide.add(createClen(People.Alzbeta, Arrays.asList(People.David), "Bětušce", Family.SPORT));
 
         // brno
         //lide.add(createClen(People.Hana, Arrays.asList(/*People.Janicka,*/ People.Stepa, People.Tony, People.Dana),"Haně", Family.BRNO));
         //lide.add(createClen(People.Lada, Arrays.asList(People.Petka, People.Tony, People.Petr_Dibl, People.Patrik),"Láďovi", Family.BRNO));
 
         // volleyball
-        lide.add(createClen(People.Petka, Arrays.asList(People.Tony, People.Hana, People.Misa, People.Kamila), "Peťce",
+        lide.add(createClen(People.Petka, Arrays.asList(People.Tony, People.Hana, People.Misa, People.Kamila, People.Dana, People.Boba), "Peťce",
                 Family.VOLLEYBALL,
                 Family.MAIN));
-        lide.add(createClen(People.Honza, Arrays.asList(People.Dana, People.Barca, People.Kamila, People.Misa),
+        lide.add(createClen(People.Honza, Arrays.asList(People.Dana, People.Barca, People.Kamila, People.Misa, People.Martina, People.Petr_Dibl),
                 "Honzovi", Family.VOLLEYBALL));
-        lide.add(
-                createClen(People.Patrik, Arrays.asList(People.Martina, People.Petr_Dibl, People.Lada, People.Stepa),
-                        "Patrikovi", Family.VOLLEYBALL));
-        lide.add(createClen(People.Filip, Arrays.asList(People.Mata, People.Tony), "Filipovi", Family.VOLLEYBALL));
+        //lide.add(
+        //        createClen(People.Patrik, Arrays.asList(People.Martina, People.Petr_Dibl, People.Lada, People.Stepa, People.Kamila),
+        //                "Patrikovi", Family.VOLLEYBALL));
+        //lide.add(createClen(People.Filip, Arrays.asList(People.Mata, People.Tony, People.Alzbeta), "Filipovi", Family.VOLLEYBALL));
 
         // main
-        lide.add(createClen(People.Stepa, Arrays.asList(People.Petr_Last, People.Boba, People.Honza, People.Filip),
+        lide.add(createClen(People.Stepa, Arrays.asList(People.Petr_Last, People.Boba, People.Honza, People.Filip, People.Barca, People.Dana),
                 "Šťepě", Family.MAIN));
-        lide.add(createClen(People.Petr_Dibl, Arrays.asList(People.Barca, People.Patrik, People.Boba, People.Lada),
-                "Petru Díblíkovi", Family.MAIN));
+        lide.add(createClen(People.Petr_Dibl, Arrays.asList(People.Barca, People.Patrik, People.Boba, People.Lada, People.Mata, People.Petr_Last),
+                "Petrovi Díblíkovi", Family.MAIN));
 
         // prague
-        lide.add(createClen(People.Martina, Arrays.asList(People.Boba, People.Mata, People.Hana, People.Honza),
+        lide.add(createClen(People.Martina, Arrays.asList(People.Boba, People.Mata, People.Hana, People.Honza, People.Filip, People.Barca),
                 "Martině", Family.PRAGUE,
                 Family.MAIN));
         lide.add(createClen(People.Petr_Last,
-                Arrays.asList(People.Petr_Dibl/*, People.Janicka*/, People.Barca, People.Petka),
-                "Petru Laštovkovi",
+                Arrays.asList(People.Petr_Dibl/*, People.Janicka*/, People.Barca, People.Petka, People.Matous, People.Tony),
+                "Petrovi Laštovkovi",
                 Family.PRAGUE));
-        lide.add(createClen(People.David, Arrays.asList(), "Davídkovi", Family.PRAGUE));
-        lide.add(createClen(People.Stepan, Arrays.asList(), "Štepánkovi", Family.PRAGUE));
+        //lide.add(createClen(People.David, Arrays.asList(People.Boba), "Davídkovi", Family.PRAGUE));
+        //lide.add(createClen(People.Stepan, Arrays.asList(People.Petka), "Štepánkovi", Family.PRAGUE));
 
         // tea
-        lide.add(createClen(People.Kuba, Arrays.asList(People.Hana, People.Petr_Last, People.Patrik, People.Boba),
+        lide.add(createClen(People.Kuba, Arrays.asList(People.Hana, People.Petr_Last, People.Patrik, People.Boba, People.Honza, People.Mata),
                 "Kubovi", Family.TEA,
                 Family.MAIN));
         lide.add(
-                createClen(People.Kamila, Arrays.asList(People.Patrik, People.Dana, People.Petka, People.Mata), "Kamče",
+                createClen(People.Kamila, Arrays.asList(People.Patrik, People.Dana, People.Petka, People.Mata, People.Petr_Last, People.Honza), "Kamče",
                         Family.TEA));
-        lide.add(createClen(People.Matous, Arrays.asList(People.Dana, People.Barca), "Matoušovi", Family.TEA));
-        lide.add(createClen(People.Vojta, Arrays.asList(), "Vojtovi", Family.TEA));
+        //lide.add(createClen(People.Matous, Arrays.asList(People.Dana, People.Barca, People.Tony), "Matoušovi", Family.TEA));
+        //lide.add(createClen(People.Vojta, Arrays.asList(People.Petr_Dibl), "Vojtovi", Family.TEA));
 
         return lide;
 
